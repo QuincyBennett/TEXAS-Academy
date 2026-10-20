@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <title id="pageTitle">Ayo Coba TKA | Pilih Mata Pelajaran</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <meta name="theme-color" content="#326698">
+
+  <!-- Bootstrap 4.5.2, FontAwesome 5.7.0, iCheck Bootstrap, Google Fonts Poppins -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/icheck-bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="mode-landing" id="appBody">
+
+  <!-- Background Pattern (Landing & Review) -->
+  <div class="bg-pattern" id="bgPattern"></div>
+
+  <!-- ==================== HEADER 1: LANDING / REVIEW MODERN HEADER ==================== -->
+  <div class="container-fluid text-white" id="headerLanding"
+    style="background: linear-gradient(135deg, #326698 0%, #4a7fb8 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.1); height:120px; position:fixed; top:0px; left:0px; right:0px; z-index:1000;">
+    <div class="row h-100 align-items-center">
+      <div class="col-12" id="headerLandingCenter">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="logo-container mr-4">
+            <img style="height:60px; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));" src="assets/images/logo-kemdikbud-71x72.png" alt="Logo Kemendikdasmen">
+          </div>
+          <div class="header-text text-left">
+            <h3 class="mb-1" style="font-weight: 700; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">PUSMENDIK</h3>
+            <p class="mb-0" style="font-size: 14px; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">APLIKASI ANBK - Simulasi TKA</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Review Mode (Left + Right User Avatar) -->
+      <div class="col-md-6 d-none" id="headerReviewLeft">
+        <div class="d-flex align-items-center justify-content-start pl-4">
+          <div class="logo-container mr-4">
+            <img style="height:60px; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));" src="assets/images/logo-kemdikbud-71x72.png" alt="Logo">
+          </div>
+          <div class="header-text text-left">
+            <h3 class="mb-1" style="font-weight: 700; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">PUSMENDIK</h3>
+            <p class="mb-0" style="font-size: 14px; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">APLIKASI ANBK - Simulasi TKA</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 d-none" id="headerReviewRight">
+        <div class="d-flex align-items-center justify-content-end pr-4">
+          <div class="user-info text-right mr-3">
+            <p class="mb-0" style="font-size: 14px; font-weight: 500;" id="reviewHeaderUser">P130100230 - PESERTA TKA</p>
+            <p class="mb-0" style="font-size: 12px; opacity: 0.8;">Reviu Hasil Simulasi</p>
+          </div>
+          <div class="user-avatar">
+            <div class="avatar-circle">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== HEADER 2: CBT / ANBK CLASSIC HEADER ==================== -->
+  <div class="container-fluid text-white d-none" id="headerCBT"
+    style="background:#326698; background-size: contain; background-image: url('assets/images/bg-top.png'); background-repeat: no-repeat; background-position: left; height:150px; position:fixed; top:0px; left:0px; right:0px; z-index:900;">
+    <div class="row">
+      <div class="col pl-5 pt-1">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <img style="margin:5px;height:70px" src="assets/images/logo-kemdikbud-71x72.png" alt="Logo">
+              </td>
+              <td class="text-left">
+                <div><b>PUSMENDIK</b></div>
+                <div><small>APLIKASI ANBK</small></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col pl-5 pt-1 mt-4 pr-5 text-right d-none" id="headerCBTUserBox">
+        <table align="right">
+          <tbody>
+            <tr>
+              <td style="vertical-align:top; padding-right:8px;">
+                <div><small id="headerCBTUserName">P130100230 - PESERTA TKA</small></div>
+              </td>
+              <td>
+                <div class="pl-1 pr-1 pt-1 pb-1" style="background:#74b9ff;border-radius:2px;color:#326698">
+                  <i class="fa fa-graduation-cap fa-flip-horizontal"></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== VIEW 1: PILIH MATA PELAJARAN ==================== -->
+  <section id="view-pilih-mapel" class="app-view">
+    <div class="wrapper" style="margin: 0 auto; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding-top: 140px;">
+      <div id="formContent" class="landing-card">
+        <div class="fadeIn text-center">
+          <div class="header-icon mb-4">
+            <div class="icon-circle">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h4 class="mt-3 mb-1" style="color: #333; font-weight: 600;">Simulasi TKA</h4>
+            <p class="text-muted" style="font-size: 14px;">Pilih jenjang dan mata pelajaran untuk memulai simulasi</p>
+          </div>
+
+          <form action="javascript:void(0)" method="post" id="formData">
+            <div class="form-group text-left">
+              <label class="form-label"><i class="fas fa-layer-group mr-2"></i><b>Jenjang Pendidikan:</b></label>
+              <select name="jenjang" id="jenjang" class="form-control custom-select">
+                <option value="sma">SMA/MA/SMK/MAK/Sederajat</option>
+                <option value="smp">SMP/MTs/Sederajat</option>
+                <option value="sd">SD/MI/Sederajat</option>
+              </select>
+            </div>
+
+            <div class="form-group text-left">
+              <label class="form-label"><i class="fas fa-book mr-2"></i><b>Jenis Mata Pelajaran:</b></label>
+              <select name="jenis_mapel" id="jenis_mapel" class="form-control custom-select">
+                <option value="1">Mata Pelajaran Wajib</option>
+                <option value="2">Mata Pelajaran Pilihan</option>
+              </select>
+            </div>
+
+            <div class="form-group text-left" id="mapel_group">
+              <label class="form-label"><i class="fas fa-book mr-2"></i><b>Mata Pelajaran:</b></label>
+              <div class="mapel-select-wrapper" id="mapel_container">
+                <div class="mapel-select-display" id="mapel_toggle">
+                  <span id="mapel_selected_label" class="mapel-placeholder">Pilih mata pelajaran...</span>
+                  <i class="fas fa-chevron-down mapel-arrow" id="mapel_arrow"></i>
+                </div>
+                <div class="mapel-dropdown" id="mapel_dropdown">
+                  <div class="mapel-search-box">
+                    <i class="fas fa-search mapel-search-icon"></i>
+                    <input type="text" id="mapel_search_input" placeholder="Cari mata pelajaran..." autocomplete="off">
+                  </div>
+                  <div class="mapel-options-list" id="mapel_options_list">
+                    <div class="mapel-loading">Loading...</div>
+                  </div>
+                </div>
+              </div>
+              <select name="mapel" id="mapel" style="display:none;"></select>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="button" class="btn btn-primary btn-lg btn-block custom-btn" id="btnMulaiSimulasi" onclick="selectData()">
+                <i class="fas fa-play mr-2"></i>Mulai Simulasi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 2: LOGIN SIMULASI ==================== -->
+  <section id="view-login" class="app-view d-none">
+    <div class="wrapper fadeInDown cbt-wrapper" style="margin-top:100px;">
+      <div class="cbt-card" style="max-width:450px; width:90%;">
+        <div class="fadeIn text-left p-5">
+          <div style="font-size:18px;"><b>Selamat Datang</b></div>
+          <div class="mb-3"><small class="text-muted">Silakan login dengan menggunakan username dan password yang anda miliki</small></div>
+          <form class="text-center" action="javascript:void(0)" id="formLogin">
+            <div class="input-group mt-4 mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="border:0px;background:#fff"><i class="fa fa-user-circle"></i></span>
+              </div>
+              <input type="text" class="form-control cbt-line-input" placeholder="Username" name="username" id="username" autocomplete="off" required value="P130100230">
+            </div>
+            <div class="input-group mt-3 mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="border:0px;background:#fff"><i class="fa fa-lock"></i></span>
+              </div>
+              <input type="password" class="form-control cbt-line-input" placeholder="Password" name="password" id="password" autocomplete="off" required value="DHND*">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="border:0px;background:#fff;padding-right:0px;padding-left:0px;cursor:pointer;" onclick="showPassword()" id="btn-eye"><i class="fa fa-eye"></i></span>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-round form-control" style="border-radius:20px" onclick="login()">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 3: KONFIRMASI DATA PESERTA ==================== -->
+  <section id="view-konfirmasi-data" class="app-view d-none">
+    <div class="container-fluid fadeInDown pl-5 pr-5 mb-5" style="margin-top:100px; position:relative; z-index:950;">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="text-left pl-5 pt-3 pb-5 mb-2 cbt-card" style="background-size: 300px; background-image: url('assets/images/logo-w.png'); background-repeat: no-repeat; background-position: top right;">
+            <div>
+              <span class="mr-3" id="token" style="font-weight:500; cursor:pointer;" title="Klik untuk menyalin token ke kolom Token" onclick="copyTokenToInput()">Token : JNZOON</span>
+              <button class="btn btn-primary btn-round btn-sm" onclick="refreshToken();">Refresh</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="fadeIn text-left pl-5 pt-3 pb-5 pr-5 cbt-card" style="background-size: 300px; background-image: url('assets/images/logo-w.png'); background-repeat: no-repeat; background-position: top right;">
+            <div style="font-size:26px" class="mb-2">Konfirmasi data Peserta</div>
+            <form class="text-left" action="javascript:void(0)" id="formKonfirmasiData">
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Kode NIK</b></small></label>
+                <input type="text" class="w-100 m-0 p-0 cbt-flat-input" id="konf_nik" readonly value="P130100230">
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Nama Peserta</b></small></label>
+                <input type="text" class="w-100 m-0 p-0 cbt-flat-input" id="konf_akun_peserta" readonly value="P130100230 - PESERTA TKA">
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Jenis Kelamin</b></small></label>
+                <select class="form-control jenis_kelamin" id="jenis_kelamin" name="jenis_kelamin">
+                  <option value="L">Laki-Laki</option>
+                  <option value="P">Perempuan</option>
+                </select>
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Mata Ujian</b></small></label>
+                <input type="text" class="w-100 m-0 p-0 cbt-flat-input" id="konf_mata_ujian" readonly value="Matematika (Paket 1)">
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Nama Peserta</b></small></label>
+                <input type="text" class="w-100 m-0 p-0 cbt-flat-input" placeholder="Ketikkan Nama Peserta" required name="nama_peserta" id="nama_peserta">
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0"><small style="font-size:10px"><b>Tanggal Lahir</b></small></label>
+                <div class="input-group mb-3">
+                  <select class="form-control" id="tgl" name="tgl" style="background-color:#eee;border:0px;margin-right:4px;border-radius:0px">
+                    <option value="">Hari</option>
+                  </select>
+                  <select class="form-control" id="bulan" name="bulan" style="background-color:#eee;border:0px;margin-right:4px;border-radius:0px">
+                    <option value="">Bulan</option>
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                  </select>
+                  <select class="form-control" id="tahun" name="tahun" style="background-color:#eee;border:0px;margin-right:4px;border-radius:0px">
+                    <option value="">Tahun</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mt-1">
+                <label class="m-0 p-0 text-primary"><small style="font-size:10px"><b>Token</b></small></label>
+                <input type="text" class="w-100 m-0 p-0 cbt-flat-input" placeholder="Ketikkan token di sini" id="input-token" name="token" required>
+              </div>
+              <button type="button" class="btn btn-primary btn-round form-control mt-4" onclick="konfirmasiData()" id="btnSubmitKonfData">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 4: KONFIRMASI TES ==================== -->
+  <section id="view-konfirmasi-tes" class="app-view d-none">
+    <div class="wrapper fadeInDown cbt-wrapper" style="margin-top:100px;">
+      <div class="fadeIn text-left pl-5 pt-5 pb-5 pr-5 cbt-card" style="max-width:450px; width:90%; background-size: 300px; background-image: url('assets/images/logo-w.png'); background-repeat: no-repeat; background-position: top right;">
+        <div style="font-size:26px" class="mb-2">Konfirmasi Tes</div>
+        <form class="text-left" action="javascript:void(0)" id="formKonfirmasiTes">
+          <div class="mt-2">
+            <label class="m-0 p-0"><small style="font-size:10px"><b>Nama Tes</b></small></label>
+            <input type="text" class="w-100 m-0 p-0 cbt-flat-input" id="tes_nama_mapel" value="Matematika (Paket 1)" readonly>
+          </div>
+          <div class="mt-2">
+            <label class="m-0 p-0"><small style="font-size:10px"><b>Status Tes</b></small></label>
+            <input type="text" class="w-100 m-0 p-0 cbt-flat-input" value="Tes Baru" readonly>
+          </div>
+          <div class="mt-2">
+            <label class="m-0 p-0"><small style="font-size:10px"><b>Waktu Tes</b></small></label>
+            <input type="text" class="w-100 m-0 p-0 cbt-flat-input" name="mulai_tes" id="tes_waktu_mulai" value="" readonly>
+          </div>
+          <div class="mt-2">
+            <label class="m-0 p-0"><small style="font-size:10px"><b>Alokasi Waktu Tes</b></small></label>
+            <input type="text" class="w-100 m-0 p-0 cbt-flat-input" id="tes_alokasi_waktu" value="75 Menit" readonly>
+          </div>
+          <button type="button" class="btn btn-primary btn-round form-control mt-4" style="border-radius:20px" onclick="mulaiTes()" id="btnMulaiTes">Mulai</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 5: PROSES TES (CBT INTERFACE) ==================== -->
+  <section id="view-proses-tes" class="app-view d-none">
+    <div class="container-fluid fadeInDown mb-5 cbt-exam-container" style="margin-top:90px; position:relative; z-index:950;">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-left pt-3 pb-4 mb-2 cbt-card exam-main-card" style="background-size: 300px; background-image: url('assets/images/logo-w.png'); background-repeat: no-repeat; background-position: top right;">
+            <div class="row row-atas align-items-center">
+              <div class="col-sm-4">
+                <span style="font-size:18px">Soal nomor</span>
+                <span style="font-size:20px; font-weight:700;" id="noSoal">1</span>
+              </div>
+              <div class="col-sm-8 cont-btn-informasi">
+                <button class="btn-informasi btn btn-primary btn-round mr-1" data-toggle="modal" data-target="#infoSoal" style="border-radius:30px;font-size:12px;">
+                  <i class="fa fa-info-circle d-sm-none"></i><span class="d-none d-sm-inline-block">INFORMASI SOAL</span>
+                </button>
+                <button class="btn-informasi btn btn-outline-secondary btn-round mr-1" style="border-radius:30px;font-size:12px;">
+                  Sisa Waktu : <b><span id="countdown">01:15:00</span></b>
+                </button>
+                <button class="btn-informasi btn btn-primary btn-round" data-toggle="modal" data-target="#myModal" style="border-radius:30px;font-size:12px">
+                  <span class="d-none d-sm-inline-block">Daftar Soal </span> <i class="fa fa-th-large"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="row pb-2 row-atas align-items-center mt-1">
+              <div class="col-sm-6">
+                <small>Ukuran font soal:</small>
+                <span style="font-size:12px" class="ml-2 mr-1 cfont" id="c1" onclick="changeFont('12','c1')">A</span>
+                <span style="font-size:16px; font-weight:bold;" class="ml-2 mr-1 cfont" id="c2" onclick="changeFont('16','c2')">A</span>
+                <span style="font-size:20px" class="ml-2 mr-1 cfont" id="c3" onclick="changeFont('18','c3')">A</span>
+              </div>
+              <div class="col-sm-6 mt-2 mataujian" id="examMataUjian">
+                Matematika (Paket 1)
+              </div>
+            </div>
+
+            <div class="row pl-3 pr-3 pb-2 mb-1">
+              <div class="col" style="border-bottom:1px solid #eee"></div>
+            </div>
+
+            <!-- ISI SOAL -->
+            <div class="row pl-3 pr-3 pb-2 mb-2">
+              <div class="col p-3" id="isisoal" style="border:2px solid #eee; border-top:10px solid #eee; font-size:16px;">
+                <!-- Динамически рендерится из банка вопросов -->
+                <div id="questionsContainer"></div>
+              </div>
+            </div>
+
+            <div class="row pl-3 pr-3 pb-1 mb-0">
+              <div class="col" style="border-bottom:1px solid #eee"></div>
+            </div>
+
+            <!-- TOMBOL NAVIGASI BAWAH -->
+            <div class="row pb-0 pt-2 mt-2 btn-bawah align-items-center">
+              <div class="col text-center">
+                <button class="btn btn-danger btn-round btn-md btn-navigasi" style="border-radius:30px;" id="btnPrevSoal" onclick="prevSoal()">
+                  <i class="fa fa-chevron-circle-left"></i> <span class="d-none d-sm-inline-block">Soal sebelumnya</span>
+                </button>
+              </div>
+              <div class="col text-center">
+                <label class="btn btn-warning btn-round btn-md btn-navigasi mb-0" style="border-radius:30px;color:#fff;cursor:pointer;">
+                  <input type="checkbox" onclick="raguRagu()" id="c_ragu_ragu" value="">
+                  <span class="d-none d-sm-inline-block ml-1">Ragu-ragu</span>
+                </label>
+              </div>
+              <div class="col text-center">
+                <button class="btn btn-primary btn-round btn-md btn-navigasi" style="border-radius:30px;" onclick="nextSoal()" id="nextSoal">
+                  <span class="d-none d-sm-inline-block" id="nextSoalLabel">Soal berikutnya</span> <i class="fa fa-chevron-circle-right"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 6: FINISH TES KONFIRMASI ==================== -->
+  <section id="view-finish-tes" class="app-view d-none">
+    <div class="wrapper fadeInDown cbt-wrapper" style="margin-top:100px;">
+      <div class="fadeIn text-left pl-5 pt-5 pb-5 pr-5 cbt-card" style="max-width:480px; width:90%; background-size: 300px; background-image: url('assets/images/logo-w.png'); background-repeat: no-repeat; background-position: top right;">
+        <div style="font-size:26px" class="mb-3">Konfirmasi Tes</div>
+        <p style="font-size:15px; line-height:1.6;">
+          Terimakasih telah berpartisipasi dalam tes ini.
+          <br>Silahkan tekan tombol <span class="bg-danger text-white px-1">SELESAI TES</span> untuk mengakhiri tes. Atau tekan tombol <span class="bg-success text-white px-1">KEMBALI</span> untuk kembali ke halaman tes.
+        </p>
+        <div class="d-flex justify-content-between flex-wrap mt-4">
+          <button type="button" class="btn btn-danger btn-round mt-2 btn-sm" style="border-radius:20px;width:160px;padding:8px 15px;font-weight:600;" onclick="goToReviewHasil()">SELESAI TES</button>
+          <button type="button" class="btn btn-success btn-round mt-2 btn-sm" style="border-radius:20px;width:160px;padding:8px 15px;font-weight:600;" onclick="backToProsesTes()">KEMBALI</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 7: REVIEW HASIL SIMULASI + SKOR & PEMBAHASAN ==================== -->
+  <section id="view-review-hasil" class="app-view d-none">
+    <div class="container-fluid fadeIn mb-5" style="margin-top:120px; padding-top: 20px;">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 col-md-12">
+          <div class="review-main-card">
+            <!-- Header Section -->
+            <div class="header-section text-center mb-4">
+              <div class="result-icon mb-3">
+                <div class="icon-circle-result">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+              </div>
+              <h2 class="result-title">Reviu Hasil Simulasi</h2>
+              <div class="subject-badge" id="reviewSubjectBadge">
+                <i class="fas fa-book mr-2"></i>Matematika (Paket 1)
+              </div>
+            </div>
+
+            <!-- Score Summary Cards -->
+            <div class="row mb-4" id="scoreSummaryRow">
+              <div class="col-md-3 col-6 mb-3">
+                <div class="score-stat-box score-primary">
+                  <div class="score-stat-label">NILAI AKHIR</div>
+                  <div class="score-stat-value" id="statNilaiAkhir">100</div>
+                  <div class="score-stat-sub" id="statPesertaNama">Peserta Simulasi</div>
+                </div>
+              </div>
+              <div class="col-md-3 col-6 mb-3">
+                <div class="score-stat-box score-success">
+                  <div class="score-stat-label">JAWABAN BENAR</div>
+                  <div class="score-stat-value" id="statBenar">0</div>
+                  <div class="score-stat-sub">Soal dijawab tepat</div>
+                </div>
+              </div>
+              <div class="col-md-3 col-6 mb-3">
+                <div class="score-stat-box score-danger">
+                  <div class="score-stat-label">JAWABAN SALAH</div>
+                  <div class="score-stat-value" id="statSalah">0</div>
+                  <div class="score-stat-sub">Belum tepat</div>
+                </div>
+              </div>
+              <div class="col-md-3 col-6 mb-3">
+                <div class="score-stat-box score-warning">
+                  <div class="score-stat-label">TIDAK DIJAWAB</div>
+                  <div class="score-stat-value" id="statKosong">0</div>
+                  <div class="score-stat-sub" id="statTotalSoalSub">Dari 0 Pertanyaan</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="table-responsive mt-3">
+              <table class="table modern-table">
+                <thead>
+                  <tr class="table-header">
+                    <th style="width:65px" class="text-center">No.</th>
+                    <th style="min-width:220px" class="text-center">
+                      <i class="fas fa-user-edit mr-2"></i>Jawaban Anda
+                    </th>
+                    <th style="min-width:220px" class="text-center">
+                      <i class="fas fa-key mr-2"></i>Kunci Jawaban
+                    </th>
+                    <th style="width:120px" class="text-center">
+                      <i class="fas fa-check-double mr-1"></i>Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="reviewTableBody">
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Action Section -->
+            <div class="action-section mt-4">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="result-stats">
+                    <div class="stat-card mb-0">
+                      <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                      </div>
+                      <div class="stat-info text-left">
+                        <h5>Total Soal</h5>
+                        <p id="reviewTotalQuestionsText">7 Pertanyaan</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="action-buttons text-right">
+                    <button class="btn custom-btn-download" onclick="window.print()">
+                      <i class="fas fa-print mr-2"></i>Cetak / Simpan PDF
+                    </button>
+                    <button class="btn custom-btn-logout" onclick="logoutSimulasi()">
+                      <i class="fas fa-sign-out-alt mr-2"></i>Keluar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODAL DAFTAR SOAL ==================== -->
+  <div class="modal fadeIn" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background:#dfe6e9">
+          <h5 class="modal-title">Daftar Soal</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body text-center pb-4 pt-4">
+          <div id="daftarSoalGrid" class="d-flex flex-wrap justify-content-center"></div>
+          <div class="mt-3 pt-3 border-top d-flex justify-content-center flex-wrap small text-muted" style="gap:15px;">
+            <span><span class="badge badge-primary">&nbsp;&nbsp;</span> Soal Aktif</span>
+            <span><span class="badge badge-dark">&nbsp;&nbsp;</span> Sudah Dijawab</span>
+            <span><span class="badge badge-warning">&nbsp;&nbsp;</span> Ragu-ragu</span>
+            <span><span class="badge badge-light border border-dark">&nbsp;&nbsp;</span> Belum Dijawab</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL INFORMASI SOAL ==================== -->
+  <div class="modal" id="infoSoal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background:#dfe6e9">
+          <h5 class="modal-title">Informasi Soal</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body text-left pb-4 pt-4 px-4" id="infoSoalBody">
+          <p class="mb-2"><b>Mata Ujian:</b> <span id="infoModalMapel">Matematika</span></p>
+          <p class="mb-2"><b>Petunjuk Pengerjaan:</b></p>
+          <ul class="small pl-3 mb-0">
+            <li>Pilih satu jawaban paling tepat untuk soal Pilihan Ganda biasa (lingkaran).</li>
+            <li>Pilih satu atau lebih jawaban benar untuk soal Pilihan Ganda Kompleks (kotak centang).</li>
+            <li>Pilih Benar/Salah pada setiap baris pernyataan untuk soal tabel kategori.</li>
+            <li>Gunakan tombol <b>Ragu-ragu</b> bila ingin menandai soal untuk diperiksa kembali.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL WAKTU HABIS ==================== -->
+  <div class="modal fadeIn" id="timeoutDialog" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body text-center pb-2 pt-5">
+          <h5 class="modal-title" style="text-align:center; font-weight:700; color:#dc3545;">PERHATIAN !!</h5>
+          <p class="mt-2">Waktu tes sudah habis !</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button class="btn btn-danger" onclick="forceFinishTimeout()">Ok, Lanjutkan !</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER INFO ==================== -->
+  <div class="footer-info" id="footerInfo">
+    <div class="container">
+      <div class="text-center">
+        <div class="copyright-card">
+          <span>Copyright &copy; 2025 Pusmendik. All rights reserved.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FLOATING ADMIN BUTTON ==================== -->
+  <a href="admin.html" class="floating-admin-btn" id="floatingAdminBtn" title="Buka Editor / Admin Soal untuk mengganti soal">
+    <i class="fas fa-cog mr-2"></i>Kelola / Edit Soal
+  </a>
+
+  <!-- ==================== LOADER OVERLAY ==================== -->
+  <div style="position:fixed;top:0px;left:0px;right:0px;bottom:0px;background:rgba(255,255,255,0.7);z-index:99999;display:none" id="loader">
+    <img class="loader" src="assets/images/loader2.gif" alt="Loading...">
+  </div>
+
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

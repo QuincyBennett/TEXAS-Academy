@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <title>Admin &amp; Editor Soal | Simulasi TKA Pusmendik</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7fb;
+      color: #2d3436;
+    }
+    .admin-navbar {
+      background: linear-gradient(135deg, #326698 0%, #4a7fb8 100%);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .card-custom {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(50,102,152,0.08);
+      background: #fff;
+    }
+    .subject-item {
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      border: 1px solid #e9ecef;
+      transition: all 0.2s;
+    }
+    .subject-item:hover {
+      background: #eef5fc;
+      border-color: #4a7fb8;
+    }
+    .subject-item.active {
+      background: #326698;
+      color: #fff;
+      border-color: #326698;
+    }
+    .subject-item.active .text-muted {
+      color: rgba(255,255,255,0.8) !important;
+    }
+    .subject-item.active .badge-light {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .question-card {
+      border: 1px solid #e3e8ef;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .question-card:hover {
+      border-color: #4a7fb8;
+      box-shadow: 0 4px 14px rgba(50,102,152,0.08);
+    }
+    .q-preview-box {
+      max-height: 110px;
+      overflow: hidden;
+      font-size: 13px;
+      color: #555;
+      background: #f8f9fa;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .q-preview-box img {
+      max-height: 60px;
+      width: auto;
+    }
+    .toolbar-btn {
+      font-size: 12px;
+      padding: 4px 9px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark admin-navbar py-3">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/images/logo-kemdikbud-71x72.png" style="height:42px" class="mr-3" alt="Logo">
+        <div>
+          <div style="font-weight:700; font-size:18px; line-height:1.1;">ADMIN &amp; EDITOR SOAL TKA</div>
+          <small style="font-size:12px; opacity:0.85;">Kelola Mata Pelajaran, Soal, Gambar, &amp; Kunci Jawaban Simulasi</small>
+        </div>
+      </a>
+      <div class="ml-auto d-flex align-items-center flex-wrap" style="gap:8px;">
+        <button class="btn btn-light btn-sm font-weight-bold text-primary" onclick="exportJSON()">
+          <i class="fas fa-download mr-1"></i>Ekspor JSON
+        </button>
+        <label class="btn btn-light btn-sm font-weight-bold text-success mb-0" style="cursor:pointer;">
+          <i class="fas fa-upload mr-1"></i>Impor JSON
+          <input type="file" id="importJsonInput" accept=".json" style="display:none" onchange="importJSONFile(this)">
+        </label>
+        <button class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#modalSettings">
+          <i class="fas fa-sliders-h mr-1"></i>Pengaturan
+        </button>
+        <button class="btn btn-warning btn-sm font-weight-bold text-dark" onclick="resetToDefaultDB()">
+          <i class="fas fa-undo mr-1"></i>Reset Bawaan
+        </button>
+        <a href="index.html" class="btn btn-success btn-sm font-weight-bold px-3">
+          <i class="fas fa-play mr-1"></i>Buka Simulasi TKA
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="container-fluid px-4 py-4">
+    <div class="row">
+      <!-- SIDEBAR KIRI: DAFTAR MATA PELAJARAN / PAKET -->
+      <div class="col-lg-4 col-md-5 mb-4">
+        <div class="card card-custom p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="font-weight-bold mb-0"><i class="fas fa-book-open text-primary mr-2"></i>Daftar Paket Mata Pelajaran</h6>
+            <button class="btn btn-primary btn-sm" onclick="openAddSubjectModal()">
+              <i class="fas fa-plus mr-1"></i>Tambah Mapel
+            </button>
+          </div>
+
+          <div class="row no-gutters mb-3">
+            <div class="col-6 pr-1">
+              <select id="filterJenjang" class="form-control form-control-sm" onchange="renderSubjectList()">
+                <option value="all">Semua Jenjang</option>
+                <option value="sma">SMA/MA/SMK</option>
+                <option value="smp">SMP/MTs</option>
+                <option value="sd">SD/MI</option>
+              </select>
+            </div>
+            <div class="col-6 pl-1">
+              <select id="filterJenis" class="form-control form-control-sm" onchange="renderSubjectList()">
+                <option value="all">Semua Jenis</option>
+                <option value="1">Mapel Wajib</option>
+                <option value="2">Mapel Pilihan</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="subjectListContainer" style="max-height: 65vh; overflow-y: auto;"></div>
+        </div>
+      </div>
+
+      <!-- PANEL KANAN: DETAIL PAKET & DAFTAR SOAL -->
+      <div class="col-lg-8 col-md-7">
+        <div class="card card-custom p-4" id="subjectDetailPanel">
+          <!-- Header Paket Aktif -->
+          <div class="d-flex justify-content-between align-items-start flex-wrap border-bottom pb-3 mb-3">
+            <div>
+              <span class="badge badge-primary mb-1" id="activeSubjBadge">SMA - Wajib</span>
+              <h4 class="font-weight-bold mb-1" id="activeSubjTitle">Matematika (Paket 1)</h4>
+              <small class="text-muted" id="activeSubjMeta">Alokasi Waktu: 75 Menit | Total: 7 Soal</small>
+            </div>
+            <div class="d-flex align-items-center mt-2 mt-sm-0" style="gap:8px;">
+              <button class="btn btn-outline-primary btn-sm" onclick="openEditSubjectModal()">
+                <i class="fas fa-edit mr-1"></i>Edit Info Paket
+              </button>
+              <button class="btn btn-outline-danger btn-sm" onclick="deleteActiveSubject()">
+                <i class="fas fa-trash mr-1"></i>Hapus Paket
+              </button>
+              <button class="btn btn-primary btn-sm font-weight-bold px-3" onclick="openQuestionModal(-1)">
+                <i class="fas fa-plus-circle mr-1"></i>Tambah Soal Baru
+              </button>
+            </div>
+          </div>
+
+          <!-- Daftar Soal -->
+          <div id="adminQuestionsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL TAMBAH / EDIT SOAL ==================== -->
+  <div class="modal fade" id="modalQuestion" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title font-weight-bold" id="modalQuestionTitle">Tambah / Edit Soal</h5>
+          <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="editQuestionIndex" value="-1">
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="font-weight-bold small">Tipe Soal TKA:</label>
+              <select class="form-control" id="qType" onchange="onQuestionTypeChange()">
+                <option value="pg">Pilihan Ganda Biasa (1 Jawaban Benar - Radio A/B/C/D/E)</option>
+                <option value="mcma">Pilihan Ganda Kompleks / MCMA (Lebih dari 1 Jawaban Benar - Checkbox)</option>
+                <option value="kategori">Pilihan Ganda Kompleks Kategori (Tabel Benar / Salah)</option>
+                <option value="isian">Isian Singkat / Jawaban Teks</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6 d-none" id="categoryLabelsGroup">
+              <label class="font-weight-bold small">Label Kolom Kategori (Misal: Benar, Salah atau Sesuai, Tidak Sesuai):</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="catLabel1" value="Benar" placeholder="Label Kolom 1">
+                <input type="text" class="form-control" id="catLabel2" value="Salah" placeholder="Label Kolom 2">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- KOLOM KIRI: WACANA / STIMULUS -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label class="font-weight-bold small mb-0">Wacana / Stimulus / Gambar (Tampil di Kolom Kiri):</label>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary toolbar-btn" onclick="insertTag('qStimulus', '<b>', '</b>')"><b>B</b></button>
+                    <button type="button" class="btn btn-outline-secondary toolbar-btn" onclick="insertTag('qStimulus', '<em>', '</em>')"><i>I</i></button>
+                    <button type="button" class="btn btn-outline-secondary toolbar-btn" onclick="insertTag('qStimulus', '<p>', '</p>')">Paragraf</button>
+                    <label class="btn btn-info toolbar-btn mb-0" style="cursor:pointer;">
+                      <i class="fas fa-image mr-1"></i>Sisipkan Gambar
+                      <input type="file" accept="image/*" style="display:none" onchange="insertImageToTextarea(this, 'qStimulus')">
+                    </label>
+                  </div>
+                </div>
+                <textarea class="form-control" id="qStimulus" rows="6" placeholder="Tulis wacana, cerita, tabel, atau sisipkan gambar pendukung soal di sini (boleh dikosongkan jika soal tidak memiliki wacana)..."></textarea>
+              </div>
+            </div>
+
+            <!-- KOLOM KANAN: PERTANYAAN POKOK -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label class="font-weight-bold small mb-0">Pertanyaan Soal (Tampil di Kolom Kanan):</label>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary toolbar-btn" onclick="insertTag('qStem', '<b>', '</b>')"><b>B</b></button>
+                    <button type="button" class="btn btn-outline-secondary toolbar-btn" onclick="insertTag('qStem', '<em>', '</em>')"><i>I</i></button>
+                    <label class="btn btn-info toolbar-btn mb-0" style="cursor:pointer;">
+                      <i class="fas fa-image mr-1"></i>Sisipkan Gambar
+                      <input type="file" accept="image/*" style="display:none" onchange="insertImageToTextarea(this, 'qStem')">
+                    </label>
+                  </div>
+                </div>
+                <textarea class="form-control" id="qStem" rows="6" placeholder="Tulis kalimat pertanyaan di sini..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <!-- AREA OPSI & KUNCI JAWABAN DINAMIS -->
+          <div id="dynamicOptionsEditor"></div>
+
+          <hr>
+
+          <!-- PEMBAHASAN SOAL -->
+          <div class="form-group mb-0">
+            <label class="font-weight-bold small"><i class="fas fa-lightbulb text-warning mr-1"></i>Pembahasan Soal (Ditampilkan pada halaman Reviu Hasil setelah tes selesai):</label>
+            <textarea class="form-control" id="qPembahasan" rows="3" placeholder="Tulis penjelasan / cara penyelesaian soal di sini (opsional)..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary font-weight-bold px-4" onclick="saveQuestionFromModal()">
+            <i class="fas fa-save mr-1"></i>Simpan Soal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL TAMBAH / EDIT PAKET MATA PELAJARAN ==================== -->
+  <div class="modal fade" id="modalSubject" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title font-weight-bold" id="modalSubjectTitle">Tambah / Edit Paket Mata Pelajaran</h5>
+          <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editSubjectMode" value="add">
+          <div class="form-group">
+            <label class="small font-weight-bold">Jenjang Pendidikan:</label>
+            <select class="form-control" id="subjJenjang">
+              <option value="sma">SMA/MA/SMK/MAK/Sederajat</option>
+              <option value="smp">SMP/MTs/Sederajat</option>
+              <option value="sd">SD/MI/Sederajat</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="small font-weight-bold">Jenis Mata Pelajaran:</label>
+            <select class="form-control" id="subjJenis">
+              <option value="1">Mata Pelajaran Wajib</option>
+              <option value="2">Mata Pelajaran Pilihan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="small font-weight-bold">Nama Mata Pelajaran:</label>
+            <input type="text" class="form-control" id="subjNama" placeholder="Contoh: Matematika / Fisika / Bahasa Indonesia">
+          </div>
+          <div class="form-group">
+            <label class="small font-weight-bold">Nama Paket (Opsional):</label>
+            <input type="text" class="form-control" id="subjPaket" placeholder="Contoh: Paket 1">
+          </div>
+          <div class="form-group mb-0">
+            <label class="small font-weight-bold">Alokasi Waktu Ujian (Menit):</label>
+            <input type="number" class="form-control" id="subjDurasi" value="75" min="1" max="300">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary font-weight-bold" onclick="saveSubjectFromModal()">Simpan Paket</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL PENGATURAN UMUM ==================== -->
+  <div class="modal fade" id="modalSettings" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title font-weight-bold"><i class="fas fa-sliders-h mr-2"></i>Pengaturan Simulasi</h5>
+          <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="small font-weight-bold">Username Login Default:</label>
+            <input type="text" class="form-control" id="setUsername" value="P130100230">
+          </div>
+          <div class="form-group">
+            <label class="small font-weight-bold">Password Login Default:</label>
+            <input type="text" class="form-control" id="setPassword" value="DHND*">
+          </div>
+          <div class="form-group">
+            <label class="small font-weight-bold">Label Akun Peserta di Header:</label>
+            <input type="text" class="form-control" id="setNamaAkun" value="P130100230 - PESERTA TKA">
+          </div>
+          <div class="custom-control custom-switch mb-2">
+            <input type="checkbox" class="custom-control-input" id="setShowPembahasan" checked>
+            <label class="custom-control-label small font-weight-bold" for="setShowPembahasan">Tampilkan Pembahasan Soal di Halaman Reviu Hasil</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="setShowAdminBtn" checked>
+            <label class="custom-control-label small font-weight-bold" for="setShowAdminBtn">Tampilkan Tombol Mengambang "Kelola / Edit Soal" di Halaman Depan</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary font-weight-bold" onclick="saveGlobalSettings()">Simpan Pengaturan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
